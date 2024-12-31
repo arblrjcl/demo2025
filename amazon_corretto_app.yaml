@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amazoncorretto
+  labels:
+    app: amazoncorretto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amazoncorretto
+  template:
+    metadata:
+      labels:
+        app: amazoncorretto
+    spec:
+      containers:
+      - name: amazoncorretto
+        image: amazoncorretto:23.0.1-alpine3.20
+        command: ["/bin/sh", "-c", "while true; do sleep 30; done"]
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - echo "I am alive"
+          initialDelaySeconds: 5
+          periodSeconds: 10
